@@ -92,6 +92,12 @@ Biensûr, lorsqu'on parle de gestion de conccurence entre plusieurs transactions
 | t7 |  ------ |```Commit;```| --------|
 | t8 | ------ |```SELECT ENAME, SAL FROM EMP WHERE ENAME IN ('Mohamed','Hichem', 'Maaoui');```|------|
 
+***//Interprétation :
+Lors de la mise à jour de la ligne de Mohamed, une autre session veut modifier la même
+ligne qui est déjà réservée par la session 1 d'où provient le problème de blocage. La session
+2 attend le "commit" de la session 1 pour résoudre ce problème.
+
+
 ## Concurrence : Niveaux d'isolation des transactions
 
 Plus le niveau est permissif, plus l’exécution est fluide, plus les anomalies sont possibles.
@@ -130,7 +136,9 @@ Autrement dit, le développeur déclare qu’une lecture va être suivie d’une
 | t11| ```SELECT ENAME, SAL FROM EMP WHERE ENAME IN ('Mohamed','Hichem', 'Maaoui');```|------|------|
 
 
-
+***//Interprétation :
+en lecture READ COMMITTED: on ne peut pas voir les modifications apportées par d'autres
+sessions si elles ne sont pas validées(commit)
 
 ### Demo Niveau d'isolation SERIALIZABLE ;
 
@@ -160,6 +168,12 @@ Autrement dit, le développeur déclare qu’une lecture va être suivie d’une
 | t21| ```COMMIT;``` |------|------|
 | t22| ------ | ```COMMIT;```|------|
 | t23| ------ |```SELECT ENAME, SAL FROM EMP WHERE ENAME IN ('Mohamed','Hichem', 'Maaoui');```|------|
+
+***//Interprétation :
+en lecture Serializable: on ne peut pas voir les modifications apportées par d'autres sessions
+même si elles sont validées(commit) .
+Au niveau de l'erreur aperçu ,il est effectué car une autre session modifie
+cette table d'où elle ne peut pas être sérialisée.
 
 
 
